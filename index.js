@@ -1,3 +1,41 @@
+        
+    function popupForm(str, width, height) {
+        var screen = $('#screen');
+        var element = $('#' + str);
+        element.center(width, height).resize(function() {
+            if (element.css('display') == 'block') {
+                screen.lock();
+            }
+        });
+        //点击了登录文字会弹出
+        $('#header .' + str).click(function() {
+            element.center(width, height)
+            element.css('display', 'block');
+            //获取锁屏
+            screen.lock().animate({ //背景渐变
+                attr: 'o',
+                target: 30,
+                t: 30,
+                step: 10
+            });
+        });
+        //点击了关闭图片会隐藏
+        $('#' + str + ' .close').click(function() {
+            element.css('display', 'none');
+            //先执行渐变动画再取消锁屏
+            screen.animate({
+                attr: 'o',
+                target: 0,
+                t: 30,
+                step: 10,
+                fn: function() {
+                    screen.unlock();
+                }
+            });
+        });
+        element.drag($('#' + str + ' h2').first()); //拖拽
+    }
+    
     $(function() {
 
         $('#header .member').hover(function() {
@@ -422,42 +460,7 @@
 
 
 
-    function popupForm(str, width, height) {
-        var screen = $('#screen');
-        var element = $('#' + str);
-        element.center(width, height).resize(function() {
-            if (element.css('display') == 'block') {
-                screen.lock();
-            }
-        });
-        //点击了登录文字会弹出
-        $('#header .' + str).click(function() {
-            element.center(width, height)
-            element.css('display', 'block');
-            //获取锁屏
-            screen.lock().animate({ //背景渐变
-                attr: 'o',
-                target: 30,
-                t: 30,
-                step: 10
-            });
-        });
-        //点击了关闭图片会隐藏
-        $('#' + str + ' .close').click(function() {
-            element.css('display', 'none');
-            //先执行渐变动画再取消锁屏
-            screen.animate({
-                attr: 'o',
-                target: 0,
-                t: 30,
-                step: 10,
-                fn: function() {
-                    screen.unlock();
-                }
-            });
-        });
-        element.drag($('#' + str + ' h2').first()); //拖拽
-    }
+    
 
 
 

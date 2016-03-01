@@ -1,19 +1,19 @@
 	/**
 	 * [$ 入口函数]
 	 * @param  {VOID} args [初始参数]
-	 * @return {Object}    [Excelsior实例]
+	 * @return {Object}    [$实例]
 	 */
 	var $ = function(args) {
-	    return new Excelsior(args);
+	    return new Base(args);
 	};	
 
 
 	/**
-	 * [Excelsior 构造函数]
+	 * [$ 构造函数]
 	 * @param  {Object} args [传入对象/字符选择器]
 	 * @return {Void}        [Null]
 	 */
-	function Excelsior(args) {
+	function Base(args) {
 	    // 通过字符选择器一层一层的找到最终需要找到的元素节点
 	    // ('#main .logo p') 在找到#main节点之后就应该把它保存之后再清空
 	    this.elements = [];
@@ -80,7 +80,7 @@
 	 * @param  {Function} fn [逻辑代码]
 	 * @return {Void}        [Null]
 	 */
-	Excelsior.prototype.ready = function(fn) {
+	Base.prototype.ready = function(fn) {
 	    addDomLoaded(fn);
 	}
 
@@ -90,7 +90,7 @@
 	 * @param  {String} id [ID名]
 	 * @return {Object}    [DOM节点]
 	 */
-	Excelsior.prototype.getid = function(id) {
+	Base.prototype.getid = function(id) {
 	    return document.getElementById(id);
 	};
 
@@ -101,7 +101,7 @@
 	 * @param  {Object} parentNode [父节点]
 	 * @return {Object}            [DOM节点]
 	 */
-	Excelsior.prototype.gettag = function(tag, parentNode) {
+	Base.prototype.gettag = function(tag, parentNode) {
 	    var node = null;
 	    var tempNodes = [];
 	    parentNode != undefined ? node = parentNode : node = document;
@@ -119,13 +119,13 @@
 	 * @param  {Object} parentNode [父节点]
 	 * @return {Object}      	   [DOM节点]
 	 */
-	Excelsior.prototype.getClass = function(className, parentNode) {
+	Base.prototype.getClass = function(className, parentNode) {
 	    var tempNode = null; // 临时用来保存父节点
 	    var tempNodes = []; // 中转变量，保存父节点下的所有节点
 	    parentNode != undefined ? tempNode = parentNode : tempNode = document;
 	    var allNodes = tempNode.getElementsByTagName('*');
 	    for (var i = 0; i < allNodes.length; i++) {
-	        if ((new RegExp('(\\s|^)' + className + '(\\s|$)')).test(allNodes[i].className)) {
+	        if ((new RegExp('(\\s|^)' + className + '(\\s|Base)')).test(allNodes[i].className)) {
 	            tempNodes.push(allNodes[i]);
 	        }
 	    }
@@ -136,9 +136,9 @@
 	/**
 	 * [find find模拟器]
 	 * @param  {String} str [字符选择器]
-	 * @return {Excelsior}     [Excelsior对象]
+	 * @return {Base}     [Base对象]
 	 */
-	Excelsior.prototype.find = function(str) {
+	Base.prototype.find = function(str) {
 	    var childElements = [];
 	    for (var i = 0; i < this.elements.length; i++) {
 	        switch (str.charAt(0)) {
@@ -168,7 +168,7 @@
 	 * @param  {Number} num [节点索引]
 	 * @return {Object}     [DOM对象]
 	 */
-	Excelsior.prototype.ge = function(num) {
+	Base.prototype.ge = function(num) {
 	    return this.elements[num];
 	}
 
@@ -176,9 +176,9 @@
 	/**
 	 * [eq 返回包装节点]
 	 * @param  {Number} num [节点索引]
-	 * @return {Excelsior}  [Excelsior对象]
+	 * @return {Base}  [Base对象]
 	 */
-	Excelsior.prototype.eq = function(num) {
+	Base.prototype.eq = function(num) {
 	    var element = this.elements[num];
 	    this.elements = [];
 	    this.elements[0] = element;
@@ -190,7 +190,7 @@
 	 * [length 返回节点数组长度]
 	 * @return {Number} [长度]
 	 */
-	Excelsior.prototype.length = function(){
+	Base.prototype.length = function(){
 		return this.elements.length;
 	}
 
@@ -199,7 +199,7 @@
 	 * [index 返回索引值]
 	 * @return {Number} [返回节点在节点数组中的索引]
 	 */
-	Excelsior.prototype.index = function(){
+	Base.prototype.index = function(){
 		var childNodes = this.elements[0].parentNode.children; // 得到父节点
 		for (var i = 0; i < childNodes.length; i++) {
 			if (this.elements[0] == childNodes[i]) return i;
@@ -212,7 +212,7 @@
 	 * @param  {String} attr [属性名]
 	 * @return {String}      [属性值]
 	 */
-	Excelsior.prototype.attr = function(attr, value){
+	Base.prototype.attr = function(attr, value){
 		for (var i = 0; i < this.elements.length; i++) {
 			if (arguments.length == 1) {
 				return this.elements[i].getAttribute(attr);
@@ -227,7 +227,7 @@
 	 * [first 第一个节点]
 	 * @return {Object}  [DOM节点]
 	 */
-	Excelsior.prototype.first = function() {
+	Base.prototype.first = function() {
 	    return this.elements[0];
 	}
 
@@ -236,16 +236,16 @@
 	 * [last 最后一个节点]
 	 * @return {Object}  [DOM节点]
 	 */
-	Excelsior.prototype.last = function() {
+	Base.prototype.last = function() {
 	    return this.elements[this.elements.length - 1];
 	}
 
 
 	/**
 	 * [prev 当前节点的上一个节点]
-	 * @return {Excelsior} [Excesior对象]
+	 * @return {Base} [Excesior对象]
 	 */
-	Excelsior.prototype.prev = function() {
+	Base.prototype.prev = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i] = this.elements[i].previousSibling;
 	        if (this.elements[i] == null) throw new Error('找不到上一个同级元素节点！');
@@ -257,9 +257,9 @@
 
 	/**
 	 * [next 当前节点的下一个节点]
-	 * @return {Excelsior} [Excesior对象]
+	 * @return {Base} [Excesior对象]
 	 */
-	Excelsior.prototype.next = function() {
+	Base.prototype.next = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i] = this.elements[i].nextSibling;
 	        if (this.elements[i] == null) throw new Error('找不到下一个同级元素节点！');
@@ -274,7 +274,7 @@
 	 * @param  {Number} num [透明值]
 	 * @return {Excesior}   [Excesior对象]
 	 */
-	Excelsior.prototype.opacity = function(num){
+	Base.prototype.opacity = function(num){
 		for (var i = 0; i < this.elements.length; i++) {
 			this.elements[i].style.opacity = num / 100; // W3C
 			this.elements[i].style.filter = 'alpha(opacity=' + num + ')'; // IE
@@ -287,9 +287,9 @@
 	 * [css 获取/设置css]
 	 * @param  {String} attr  [属性名]
 	 * @param  {String} value [属性值]
-	 * @return {Excelsior}    [Excesior对象]
+	 * @return {Base}    [Excesior对象]
 	 */
-	Excelsior.prototype.css = function(attr, value) {
+	Base.prototype.css = function(attr, value) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	    	// 获取
 	        if (arguments.length == 1) {
@@ -305,9 +305,9 @@
 	/**
 	 * [addClass 添加class]
 	 * @param  {String} className [class名]
-	 * @return {Excelsior}        [Excesior对象]
+	 * @return {Base}        [Excesior对象]
 	 */
-	Excelsior.prototype.addClass = function(className) {
+	Base.prototype.addClass = function(className) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        if (!hasClass(this.elements[i], className)) {
 	            this.elements[i].className += ' ' + className;
@@ -320,12 +320,12 @@
 	/**
 	 * [removeClass 移除class]
 	 * @param  {String} className [class名]
-	 * @return {Excelsior}        [Excesior对象]
+	 * @return {Base}        [Excesior对象]
 	 */
-	Excelsior.prototype.removeClass = function(className) {
+	Base.prototype.removeClass = function(className) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        if (hasClass(this.elements[i], className)) {
-	            this.elements[i].className = this.elements[i].className.replace(new RegExp('(\\s|^)' + className + '(\\s|$)'), '');
+	            this.elements[i].className = this.elements[i].className.replace(new RegExp('(\\s|^)' + className + '(\\s|Base)'), '');
 	        }
 	    }
 	    return this;
@@ -339,7 +339,7 @@
 	 * @param {String} cssText      [设置css样式]
 	 * @param {Number} position     [css样式行号]
 	 */
-	Excelsior.prototype.addRule = function(num, selectorText, cssText, position) {
+	Base.prototype.addRule = function(num, selectorText, cssText, position) {
 	    var sheet = document.styleSheets[num];
 	    if (typeof sheet.insertRule != "undefined") { // W3C
 	        sheet.insertRule(selectorText + '{' + cssText + '}', position);
@@ -356,7 +356,7 @@
 	 * @param  {[type]} index [description]
 	 * @return {[type]}       [description]
 	 */
-	Excelsior.prototype.removeRule = function(num, index) {
+	Base.prototype.removeRule = function(num, index) {
 	    var sheet = document.styleSheets[num];
 	    if (typeof sheet.deleteRule != "undefined") { // W3C
 	        sheet.deleteRule(index);
@@ -370,9 +370,9 @@
 	/**
 	 * [form description]
 	 * @param  {String} name [表单元素快速选定]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.form = function(name) {
+	Base.prototype.form = function(name) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i] = this.elements[i][name]
 	    }
@@ -383,9 +383,9 @@
 	/**
 	 * [html 设置/获取表单域的值]
 	 * @param  {String} str  [设置的值]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.value = function(str) {
+	Base.prototype.value = function(str) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        if (arguments.length == 0) {
 	            return this.elements[i].value;
@@ -399,9 +399,9 @@
 	/**
 	 * [html 设置/获取文本]
 	 * @param  {String} str  [设置的文本]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.text = function(text) {
+	Base.prototype.text = function(text) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        if (arguments.length == 0) {
 	            return getInnerText(this.elements[i]);
@@ -414,9 +414,9 @@
 	/**
 	 * [html 设置/获取HTML]
 	 * @param  {String} str  [设置的HTML]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.html = function(str) {
+	Base.prototype.html = function(str) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        if (arguments.length == 0) {
 	            return this.elements[i].innerHTML;
@@ -430,9 +430,9 @@
 	/**
 	 * [click 点击事件]
 	 * @param  {Function} fn [点击函数]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.click = function(fn) {
+	Base.prototype.click = function(fn) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i].onclick = fn;
 	    }
@@ -442,9 +442,9 @@
 
 	/**
 	 * [toggle 切换函数]
-	 * @return {Excelsior}  [Excesior对象]
+	 * @return {Base}  [Excesior对象]
 	 */
-	Excelsior.prototype.toggle = function() {
+	Base.prototype.toggle = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        (function(element, args) {
 	            var count = 0;
@@ -459,9 +459,9 @@
 
 	/**
 	 * [show 显示节点]
-	 * @return {Excelsior}  [Excesior对象]
+	 * @return {Base}  [Excesior对象]
 	 */
-	Excelsior.prototype.show = function() {
+	Base.prototype.show = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i].style.display = 'block';
 	    }
@@ -471,9 +471,9 @@
 
 	/**
 	 * [hide 隐藏节点]
-	 * @return {Excelsior}  [Excesior对象]
+	 * @return {Base}  [Excesior对象]
 	 */
-	Excelsior.prototype.hide = function() {
+	Base.prototype.hide = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i].style.display = 'none';
 	    }
@@ -485,9 +485,9 @@
 	 * [bind 事件绑定]
 	 * @param  {String}   even [事件类型]
 	 * @param  {Function} fn   [事件函数]
-	 * @return {Excelsior}     [Excesior对象]
+	 * @return {Base}     [Excesior对象]
 	 */
-	Excelsior.prototype.bind = function(event, fn) {
+	Base.prototype.bind = function(event, fn) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        addEvent(this.elements[i], event, fn);
 	    }
@@ -498,9 +498,9 @@
 	 * [hover 鼠标事件函数]
 	 * @param  {function} over [鼠标移入函数]
 	 * @param  {function} out  [鼠标移出函数]
-	 * @return {Excelsior}     [Excesior对象]
+	 * @return {Base}     [Excesior对象]
 	 */
-	Excelsior.prototype.hover = function(over, out) {
+	Base.prototype.hover = function(over, out) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        addEvent(this.elements[i], 'mouseover', over);
 	        addEvent(this.elements[i], 'mouseout', out);
@@ -513,9 +513,9 @@
 	 * [center 元素实时居中]
 	 * @param  {Number} width  [宽]
 	 * @param  {Number} height [高]
-	 * @return {Excelsior}     [Excesior对象]
+	 * @return {Base}     [Excesior对象]
 	 */
-	Excelsior.prototype.center = function(width, height) {
+	Base.prototype.center = function(width, height) {
 	    var left = (getInner().width - width) / 2; //取得整个屏幕大小减去登陆框的宽度就是左右居中
 	    var top = (getInner().height - height) / 2; //取得整个屏幕大小减去登陆框的高度就是上下居中
 	    for (var i = 0; i < this.elements.length; i++) {
@@ -529,9 +529,9 @@
 	/**
 	 * [resize 重置浏览器]
 	 * @param  {Function} fn [回调函数]
-	 * @return {Excelsior}   [Excesior对象]
+	 * @return {Base}   [Excesior对象]
 	 */
-	Excelsior.prototype.resize = function(fn) {
+	Base.prototype.resize = function(fn) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        var element = this.elements[i];
 	        addEvent(window, 'resize', function() {
@@ -550,9 +550,9 @@
 
 	/**
 	 * [lock 锁屏函数]
-	 * @return {Excelsior}  [Excesior对象]
+	 * @return {Base}  [Excesior对象]
 	 */
-	Excelsior.prototype.lock = function() {
+	Base.prototype.lock = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i].style.width = getInner().width + 'px';
 	        this.elements[i].style.height = getInner().height + 'px';
@@ -565,9 +565,9 @@
 
 	/**
 	 * [unlock 解除锁屏]
-	 * @return {Excelsior}  [Excesior对象]
+	 * @return {Base}  [Excesior对象]
 	 */
-	Excelsior.prototype.unlock = function() {
+	Base.prototype.unlock = function() {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        this.elements[i].style.display = 'none';
 	        document.documentElement.style.overflow = 'auto';
@@ -580,9 +580,9 @@
 	/**
 	 * [animate 动画函数]
 	 * @param  {Object} obj [参数对象]
-	 * @return {Excelsior}  [Excelsior对象]
+	 * @return {Base}  [Base对象]
 	 */
-	Excelsior.prototype.animate = function(obj) {
+	Base.prototype.animate = function(obj) {
 	    for (var i = 0; i < this.elements.length; i++) {
 	        var element = this.elements[i];
 	        // 动画类型 默认为向右的运动动画
@@ -716,8 +716,8 @@
 	 * @param  {Function} fn   [插件主体]
 	 * @return {Void}          [Null]
 	 */
-	Excelsior.prototype.extend = function(name, fn) {
-	    Excelsior.prototype[name] = fn;
+	Base.prototype.extend = function(name, fn) {
+	    Base.prototype[name] = fn;
 	}
 
 	
@@ -725,7 +725,7 @@
 	 * [fuck Fuck]
 	 * @return {Void} [Null]
 	 */
-	Excelsior.prototype.fuck = function() {
+	Base.prototype.fuck = function() {
 	    console.log('Fuck the Life!');
 	    this.fuck();
 	}
