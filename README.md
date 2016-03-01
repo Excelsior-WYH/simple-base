@@ -18,6 +18,7 @@
 - animate
 - bind
 - extend
+- ......
 
 
 
@@ -30,7 +31,7 @@
 		$('#demo .test')
 		$('#demo span')
 		$(.test)
-		$('p'
+		$('p')
 		
 		// 复杂选择器
 		$('#demo').find('.test')
